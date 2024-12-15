@@ -4,6 +4,7 @@ using MessageApp.Interfaces;
 using MessageApp.Mapping;
 using MessageApp.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,10 +15,11 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy(MyAllowSpecificOrigins, builder =>
     {
-        builder.WithOrigins("http://localhost:4200") // URL de tu app Angular
+        builder.WithOrigins("http://localhost:4200",
+                            "https://message-app-fawn.vercel.app/")
                .AllowAnyHeader()
                .AllowAnyMethod()
-               .AllowCredentials(); // Permite enviar cookies o credenciales
+               .AllowCredentials();
     });
 });
 
@@ -29,11 +31,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
-
 builder.Services.AddSignalR();
 
-
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
+    Environment.GetEnvironmentVariable("ConnectionString");
 
 builder.Services.AddTransient<IMessageService, MessageService>();
 builder.Services.AddTransient<IStudentService, StudentService>();
