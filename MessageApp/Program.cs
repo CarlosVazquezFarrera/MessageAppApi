@@ -16,7 +16,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(MyAllowSpecificOrigins, builder =>
     {
         builder.WithOrigins("http://localhost:4200",
-                            "https://message-app-fawn.vercel.app/")
+                            "https://message-app-fawn.vercel.app")
                .AllowAnyHeader()
                .AllowAnyMethod()
                .AllowCredentials();
