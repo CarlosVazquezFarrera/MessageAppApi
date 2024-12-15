@@ -33,8 +33,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
-    Environment.GetEnvironmentVariable("ConnectionString");
+var connectionString = Environment.GetEnvironmentVariable("ConnectionString") ??
+    builder.Configuration.GetConnectionString("DefaultConnection") ;
 
 builder.Services.AddTransient<IMessageService, MessageService>();
 builder.Services.AddTransient<IStudentService, StudentService>();
