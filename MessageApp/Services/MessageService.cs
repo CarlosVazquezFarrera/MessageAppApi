@@ -32,5 +32,14 @@ namespace MessageApp.Services
 
             return _mapper.Map<MessageDTO>(newMessage);
         }
+
+        public async Task DeleteMessage(Guid Id)
+        {
+            Message? message = await _context.Messages.FindAsync(Id);
+            if (message != null) {
+                _context.Remove(message);
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

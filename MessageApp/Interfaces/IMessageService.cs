@@ -6,5 +6,6 @@ namespace MessageApp.Interfaces
     {
         IEnumerable<MessageDTO> GetAll();
         Task<MessageDTO> SaveMessage(MessageDTO message);
+        Task DeleteMessage(Guid Id);
     }
 }

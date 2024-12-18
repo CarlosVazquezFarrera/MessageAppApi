@@ -35,5 +35,12 @@ namespace MessageApp.Controllers
             await _hubContext.Clients.All.SendAsync("ReceiveMessage", newMessage);
             return Ok(newMessage);
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete ([FromQuery]Guid Id)
+        {
+            await _messageService.DeleteMessage(Id);
+            return Ok();
+        }
     }
 }
