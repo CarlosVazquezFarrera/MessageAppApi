@@ -30,6 +30,7 @@ namespace MessageApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(MessageDTO message)
         {
+            message.Createdat = DateTime.Now;
             var newMessage = await _messageService.SaveMessage(message);
             await _hubContext.Clients.All.SendAsync("ReceiveMessage", newMessage);
             return Ok(newMessage);
